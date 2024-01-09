@@ -13,15 +13,4 @@ public class Label extends Base{
         return "id: " + id + "; name: " + name + "; status: " + status + ";";
     }
 
-    public void setFirstName(String updatedFirstName) {
-    }
-
-    public void setLastName(String updatedLastName) {
-    }
-
-    public void setTitle(String updatedTitle) {
-    }
-
-    public void setContent(String updatedContent) {
-    }
 }

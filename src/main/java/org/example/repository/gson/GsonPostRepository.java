@@ -26,8 +26,8 @@ public abstract class GsonPostRepository implements PostRepository {
         return posts.stream().mapToLong(Post::getId).max().orElse(0) + 1;
     }
 
-    public Optional<Label> getById( Long id) {
-        return findAll().stream()
+    public Optional<Post> getById( Long id) {
+        return readPostsFromFile().stream()
                 .filter(label -> label.getId().equals(id))
                 .findFirst();
     }
@@ -48,11 +48,9 @@ public abstract class GsonPostRepository implements PostRepository {
     }
 
     @Override
-    public List<Label> findAll() {
-        return List.of(readLabelsFromFile());
+    public List<Post> findAll() {
+        return readPostsFromFile();
     }
-
-    protected abstract Label readLabelsFromFile();
 
     @Override
     public boolean checkIfExists(Long id) {
@@ -74,4 +72,6 @@ public abstract class GsonPostRepository implements PostRepository {
         writePostsToFile(posts);
         return post;
     }
+
+    protected abstract Label readLabelsFromFile();
 }

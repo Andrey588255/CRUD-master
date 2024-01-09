@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 
 public abstract class Base {
-    protected Long Id;
+    protected Long id;
     protected Status status;
 
     public Base(){

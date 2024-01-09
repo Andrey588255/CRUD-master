@@ -1,7 +1,6 @@
 package org.example.view;
 import lombok.RequiredArgsConstructor;
 import org.example.controller.WriterController;
-import org.example.model.Label;
 import org.example.model.Writer;
 import org.example.util.ConsoleUtil;
 
@@ -45,12 +44,12 @@ public class WriterView {
     }
 
     private void findAll() {
-        List<Label> writers = writerController.findAll();
+        List<Writer> writers = writerController.findAll();
         ConsoleUtil.printOperationResult("Available active writers: ");
         if (writers == null) {
             System.out.println("No posts available");
         } else {
-            for (Label w : writers) {
+            for (Writer w : writers) {
                 System.out.println(w);
             }
         }
@@ -69,7 +68,7 @@ public class WriterView {
 
     private void update() {
         Long updatedWriterId = ConsoleUtil.readLong(sc, "Id: ");
-        Optional<Label> updatedWriter = writerController.get(updatedWriterId);
+        Optional<Writer> updatedWriter = writerController.get(updatedWriterId);
         if (updatedWriter.isPresent()) {
             System.out.print("First name: ");
             String updatedFirstName = sc.next();
@@ -102,9 +101,10 @@ public class WriterView {
 
     private void view() {
         Long id = ConsoleUtil.readLong(sc, "Id: ");
-        Optional<Label> writer = writerController.get(id);
+        Optional<Writer> writer = writerController.get(id);
         ConsoleUtil.writeEmptyLines();
-        ConsoleUtil.printOperationResult(writer.isPresent() ? writer.get().toString(id) : "No writer with such id");
+        ConsoleUtil.printOperationResult(writer.isPresent() ? writer.get().toString() :
+                "No writer with such id");
     }
 
     private List<Long> readAllPostsIds() {

@@ -1,6 +1,5 @@
 plugins {
     id("java")
-    kotlin("jvm") version "2.0.0-Beta2"
 }
 
 group = "org.example"
@@ -21,5 +20,8 @@ dependencies {
 }
 
 tasks.test {
+    useJUnitPlatform()
+}
+tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }

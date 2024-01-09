@@ -1,7 +1,6 @@
 package org.example.repository.gson;
 
 import org.example.model.Label;
-import org.example.model.Post;
 import org.example.model.Status;
 import org.example.repository.LabelRepository;
 
@@ -16,10 +15,6 @@ import org.example.util.FileUtil;
 
 public class GsonLabelRepository implements LabelRepository {
     private final String filePath = "labels.json";
-    private String id;
-    private Label label;
-    private Label label1;
-
 
     private List<Label> readLabelsFromFile() {
         return FileUtil.readFromFile(filePath, new TypeToken<List<Label>>() {
@@ -42,7 +37,6 @@ public class GsonLabelRepository implements LabelRepository {
         }
         return (seen ? best : 0) + 1;
     }
-
 
     public Optional<Label> getById( Long id) {
         return findAll().stream()
@@ -78,16 +72,6 @@ public class GsonLabelRepository implements LabelRepository {
     }
 
     @Override
-    public java.awt.Label save( java.awt.Label entity ) {
-        return null;
-    }
-
-    @Override
-    public Post save( Post entity ) {
-        return null;
-    }
-
-    @Override
     public List<Label> findAll() {
         return readLabelsFromFile();
     }
@@ -98,4 +82,3 @@ public class GsonLabelRepository implements LabelRepository {
                 .anyMatch(l -> l.getId().equals(id));
     }
 }
-

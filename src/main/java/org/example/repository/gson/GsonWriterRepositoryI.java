@@ -1,19 +1,13 @@
 package org.example.repository.gson;
 
-import org.example.model.Label;
-import org.example.model.Post;
 import org.example.model.Status;
 import org.example.model.Writer;
 import org.example.repository.WriterRepository;
 import com.google.gson.reflect.TypeToken;
 import org.example.util.FileUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-;
-import java.util.Optional;
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GsonWriterRepositoryI implements WriterRepository {
     private final String filePath = "writers.json";
@@ -21,7 +15,6 @@ public class GsonWriterRepositoryI implements WriterRepository {
     private List<Writer> readWritersFromFile() {
         return FileUtil.readFromFile(filePath, new TypeToken<List<Writer>>(){}.getType());
     }
-
 
     private void writeWritersToFile(List<Writer> writers) {
         FileUtil.writeToFile(filePath, writers);
@@ -40,8 +33,7 @@ public class GsonWriterRepositoryI implements WriterRepository {
         return (seen ? best : 0) + 1;
     }
 
-
-    public Optional<Label> getById( Long id ) {
+    public Optional<Writer> getById( Long id ) {
         return findAll().stream()
                 .filter(label -> label.getId().equals(id))
                 .findFirst();
@@ -49,47 +41,44 @@ public class GsonWriterRepositoryI implements WriterRepository {
 
     @Override
     public void deleteById( Long id ) {
-        List<Label> labels = new ArrayList<>();
-        for (Label l : readLabelsFromFile()) {
-            if (l.getId().equals(id)) {
-                l.setStatus(Status.DELETED);
+        List<Writer> writers = readWritersFromFile();
+        for (Writer wr : writers) {
+            if (wr.getId().equals(id)) {
+                wr.setStatus(Status.DELETED);
             }
-            boolean add = labels.add(l);
         }
-        writeLabelsToFile(labels);
+        writeWritersToFile(writers);
     }
 
     @Override
-    public java.awt.Label save( java.awt.Label entity ) {
-        return null;
-    }
-
-    private Label[] readLabelsFromFile() {
-        return new Label[0];
-    }
-
-    private void writeLabelsToFile( List<Label> labels ) {
-    }
-
-    @Override
-    public Post save( Post entity ) {
-        return null;
-    }
-
-    @Override
-    public List<Label> findAll() {
-        return List.of(readLabelsFromFile());
+    public List<Writer> findAll() {
+        return readWritersFromFile();
     }
 
     @Override
     public boolean checkIfExists(Long id) {
-        return Arrays.stream(readLabelsFromFile())
+        return readWritersFromFile().stream()
                 .anyMatch(l -> l.getId().equals(id));
     }
 
     @Override
-    public Writer save( Writer writer ) {
-        return null;
+    public Writer save( Writer writerToSave ) {
+        List<Writer> writers = readWritersFromFile();
+        if (Objects.isNull(writerToSave.getId())) {
+            writerToSave.setId(generateIncrementedId(writers));
+            writers.add(writerToSave);
+        } else {
+            writers = writers.stream()
+                    .map(exisitingWriter -> {
+                        if(Objects.equals(exisitingWriter.getId(), writerToSave.getId())) {
+                            return writerToSave;
+                        }
+                        return exisitingWriter;
+                    })
+                    .collect(Collectors.toList());
+        }
+        writeWritersToFile(writers);
+        return writerToSave;
     }
 }
 

@@ -10,8 +10,6 @@ import org.example.repository.WriterRepository;
 import org.example.repository.gson.GsonLabelRepository;
 import org.example.repository.gson.GsonPostRepository;
 import org.example.repository.gson.GsonWriterRepositoryI;
-import org.example.service.PostService;
-import org.example.service.WriterService;
 import org.example.util.ConsoleUtil;
 
 import java.io.IOException;
@@ -29,17 +27,10 @@ public class MainView {
             protected Label readLabelsFromFile() {
                 return null;
             }
-
-            @Override
-            public java.awt.Label save( java.awt.Label entity ) {
-                return null;
-            }
         };
         LabelRepository labelRepository = new GsonLabelRepository();
-        PostService postService = new PostService(postRepository, labelRepository);
-        WriterService writerService = new WriterService(writerRepository, postRepository);
-        this.writerController = new WriterController(writerService, writerRepository, postRepository);
-        this.postController = new PostController(postService, postRepository, labelRepository);
+        this.writerController = new WriterController(writerRepository, postRepository);
+        this.postController = new PostController(postRepository, labelRepository);
         this.labelController = new LabelController(labelRepository);
 
     }
