@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "content": "Java",
+    "created": "Dec 26, 2023, 5:20:09 PM",
+    "updated": "Dec 26, 2023, 5:20:09 PM",
+    "labels": [
+      {
+        "id": 1,
+        "name": "Andriy",
+        "labelStatus": "ACTIVE"
+      }
+    ],
+    "postStatus": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "content": "Chrome",
+    "created": "Dec 26, 2023, 5:20:09 PM",
+    "updated": "Dec 26, 2023, 5:20:09 PM",
+    "labels": [],
+    "postStatus": "ACTIVE"
+  },
+  {
+    "id": 3,
+    "content": "C+",
+    "created": "Dec 26, 2023, 5:20:09 PM",
+    "updated": "Dec 26, 2023, 5:20:09 PM",
+    "labels": [
+      {
+        "id": 2,
+        "name": "Adam",
+        "labelStatus": "ACTIVE"
+      }
+    ],
+    "postStatus": "ACTIVE"
+  }
+]
